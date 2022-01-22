@@ -20,5 +20,8 @@
   <%= @restaurant.chef %>
 </p>
 
+<%#= review/deja tu comentario %>
+<%= link_to "New Review", new_review_path %>
+
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
 <%= link_to 'Back', restaurants_path %>

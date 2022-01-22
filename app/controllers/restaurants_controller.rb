@@ -8,6 +8,7 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/1 or /restaurants/1.json
   def show
+    @restaurants = Restaurant.includes(:Review) #Para que se vea la opcion de agregar review
   end
 
   # GET /restaurants/new

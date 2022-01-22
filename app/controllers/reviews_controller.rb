@@ -3,20 +3,24 @@ class ReviewsController < ApplicationController
 
   # GET /reviews or /reviews.json
   def index
-    @reviews = Review.all
+    @reviews = Review.all  
   end
 
   # GET /reviews/1 or /reviews/1.json
   def show
+    @restaurants = Restaurant.all
   end
 
   # GET /reviews/new
   def new
+    #@reviewss = Review.includes(:restaurants)
     @review = Review.new
+    @restaurants = Restaurant.all
   end
 
   # GET /reviews/1/edit
   def edit
+    @restaurants = Restaurant.all
   end
 
   # POST /reviews or /reviews.json
@@ -28,6 +32,7 @@ class ReviewsController < ApplicationController
         format.html { redirect_to review_url(@review), notice: "Review was successfully created." }
         format.json { render :show, status: :created, location: @review }
       else
+        @restaurants = Restaurant.all
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
@@ -41,6 +46,7 @@ class ReviewsController < ApplicationController
         format.html { redirect_to review_url(@review), notice: "Review was successfully updated." }
         format.json { render :show, status: :ok, location: @review }
       else
+        @restaurants = Restaurant.all
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @review.errors, status: :unprocessable_entity }
       end
@@ -61,7 +67,12 @@ class ReviewsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_review
       @review = Review.find(params[:id])
+    rescue
+      flash[:set_restaurant_error] = "Could not find the record #{params[:id]}"
+      redirect_to restaurant_path
     end
+
+    #crear def
 
     # Only allow a list of trusted parameters through.
     def review_params
